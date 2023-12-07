@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora Básica</title>
+    <style>
+        /* Aquí puedes agregar tu CSS */
+    </style>
+</head>
+<body>
+    <h1>Calculadora Básica</h1>
+    <input id="display" type="text" readonly>
+    <div id="buttons">
+        <button class="num">1</button>
+        <button class="num">2</button>
+        <button class="num">3</button>
+        <button class="num">4</button>
+        <button class="num">5</button>
+        <button class="num">6</button>
+        <button class="num">7</button>
+        <button class="num">8</button>
+        <button class="num">9</button>
+        <button class="num">0</button>
+        <button id="clear">C</button>
+        <button class="op">+</button>
+        <button class="op">-</button>
+        <button class="op">*</button>
+        <button class="op">/</button>
+        <button id="equals">=</button>
+    </div>
+    <script>
+        class BasicCalculator {
+            constructor() {
+                this.value = 0;
+                this.valuef = 0;
+                this.operator = '';
+                this.display = document.getElementById('display');
+                this.nums = document.getElementsByClassName('num');
+                this.ops = document.getElementsByClassName('op');
+                this.clear = document.getElementById('clear');
+                this.equals = document.getElementById('equals');
+
+                for (let i = 0; i < this.nums.length; i++) {
+                    this.nums[i].addEventListener('click', () => this.button_callback(parseInt(this.nums[i].innerText)));
+                }
+
+                for (let i = 0; i < this.ops.length; i++) {
+                    this.ops[i].addEventListener('click', () => this.operator_callback(this.ops[i].innerText));
+                }
+
+                this.equals.addEventListener('click', () => this.equal_callback());
+                this.clear.addEventListener('click', () => this.clear_callback());
+            }
+
+            button_callback(number) {
+                this.value = this.value * 10 + number;
+                this.display.value = this.value;
+            }
+
+            operator_callback(operator) {
+                this.valuef = this.value;
+                this.operator = operator;
+                this.value = 0;
+            }
+
+            equal_callback() {
+                let result = eval(this.valuef + this.operator + this.value);
+                this.display.value = result;
+                this.value = result;
+            }
+
+            clear_callback() {
+                this.value = 0;
+                this.valuef = 0;
+                this.operator = '';
+                this.display.value = '';
+            }
+        }
+
+        new BasicCalculator();
+    </script>
+</body>
+</html>
